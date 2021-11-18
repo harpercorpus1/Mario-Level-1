@@ -22,6 +22,8 @@ class Control(object):
         self.caption = caption
         self.fps = 60
         self.show_fps = False
+        # added this
+        self.mute = False
         self.current_time = 0.0
         self.keys = pg.key.get_pressed()
         self.state_dict = {}
@@ -56,6 +58,7 @@ class Control(object):
             elif event.type == pg.KEYDOWN:
                 self.keys = pg.key.get_pressed()
                 self.toggle_show_fps(event.key)
+                self.toggle_mute(event.key)
             elif event.type == pg.KEYUP:
                 self.keys = pg.key.get_pressed()
             self.state.get_event(event)
@@ -66,6 +69,17 @@ class Control(object):
             self.show_fps = not self.show_fps
             if not self.show_fps:
                 pg.display.set_caption(self.caption)
+
+    # added this
+    def toggle_mute(self, key):
+        if key == pg.K_m:
+            if self.mute == False:
+                pg.mixer.music.pause()
+                self.mute = False
+            else:
+                pg.mixer.music.unpause()
+                self.mute = True
+
 
 
     def main(self):
